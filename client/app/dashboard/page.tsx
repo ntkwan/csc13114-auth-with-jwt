@@ -85,29 +85,6 @@ export default function DashboardPage() {
                   )}
                 </CardContent>
               </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Protected Content</CardTitle>
-                  <CardDescription>
-                    This content is only visible to authenticated users
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">
-                    Congratulations! You have successfully implemented JWT authentication with access and refresh tokens.
-                    This dashboard demonstrates:
-                  </p>
-                  <ul className="mt-4 space-y-2 text-sm text-gray-600">
-                    <li>• Protected routes that require authentication</li>
-                    <li>• Automatic token refresh when access token expires</li>
-                    <li>• Secure logout that clears all tokens</li>
-                    <li>• User profile data fetching from protected endpoints</li>
-                    <li>• React Query integration for state management</li>
-                    <li>• React Hook Form for form validation</li>
-                  </ul>
-                </CardContent>
-              </Card>
             </div>
           )}
         </main>
