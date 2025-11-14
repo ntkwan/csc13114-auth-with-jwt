@@ -1,7 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Navigation } from "@/components/navigation";
@@ -10,8 +10,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { registerUser, type RegisterData } from "@/lib/api";
 import { CheckCircle2, AlertCircle } from "lucide-react";
+import { useRegister } from "@/lib/auth-hooks";
+import { useAuth } from "@/lib/auth-context";
 
 interface SignupForm {
   email: string;
@@ -21,6 +22,9 @@ interface SignupForm {
 
 export default function SignupPage() {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
+  const registerMutation = useRegister();
+  
   const {
     register,
     handleSubmit,
@@ -28,19 +32,21 @@ export default function SignupPage() {
     watch,
   } = useForm<SignupForm>();
 
-  const mutation = useMutation({
-    mutationFn: registerUser,
-    onSuccess: (data) => {
-      console.log("Registration successful:", data);
-      setTimeout(() => {
-        router.push("/login");
-      }, 2000);
-    },
-  });
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/dashboard');
+    }
+  }, [isAuthenticated, router]);
 
   const onSubmit = async (data: SignupForm) => {
     const { email, password } = data;
-    mutation.mutate({ email, password });
+    registerMutation.mutate({ email, password }, {
+      onSuccess: () => {
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
+      },
+    });
   };
 
   const password = watch("password");
@@ -58,22 +64,22 @@ export default function SignupPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {mutation.isSuccess && (
-                <Alert variant="success" className="mb-6">
-                  <CheckCircle2 className="h-4 w-4" />
-                  <AlertTitle>Success</AlertTitle>
-                  <AlertDescription>
+              {registerMutation.isSuccess && (
+                <Alert variant="default" className="mb-6 border-green-200 bg-green-50">
+                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                  <AlertTitle className="text-green-800">Success</AlertTitle>
+                  <AlertDescription className="text-green-700">
                     Account created successfully! Redirecting to login...
                   </AlertDescription>
                 </Alert>
               )}
 
-              {mutation.isError && (
+              {registerMutation.isError && (
                 <Alert variant="destructive" className="mb-6">
                   <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Error</AlertTitle>
                   <AlertDescription>
-                    {(mutation.error as any)?.response?.data?.message ||
+                    {(registerMutation.error as any)?.response?.data?.message ||
                       "Failed to register. Please try again."}
                   </AlertDescription>
                 </Alert>
@@ -140,9 +146,9 @@ export default function SignupPage() {
                 <Button
                   type="submit"
                   className="w-full"
-                  disabled={mutation.isPending}
+                  disabled={registerMutation.isPending}
                 >
-                  {mutation.isPending ? "Creating account..." : "Sign up"}
+                  {registerMutation.isPending ? "Creating account..." : "Sign up"}
                 </Button>
               </form>
 
