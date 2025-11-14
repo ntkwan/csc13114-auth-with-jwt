@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Navigation } from "@/components/navigation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/lib/auth-context";
 
 export default function Home() {
@@ -46,49 +45,6 @@ export default function Home() {
             )}
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-            <Card>
-              <CardHeader>
-                <CardTitle>JWT Authentication</CardTitle>
-                <CardDescription>
-                  Secure access and refresh token implementation
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600">
-                  Uses JWT access tokens (15min) and refresh tokens (7 days) for secure authentication.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>React Query</CardTitle>
-                <CardDescription>
-                  Efficient server state management
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600">
-                  Handles authentication mutations and data fetching with automatic caching and synchronization.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>React Hook Form</CardTitle>
-                <CardDescription>
-                  Form validation and handling
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600">
-                  Provides robust form validation with real-time error feedback and type safety.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </main>
     </div>
