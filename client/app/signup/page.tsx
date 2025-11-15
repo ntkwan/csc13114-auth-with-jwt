@@ -13,6 +13,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CheckCircle2, AlertCircle } from "lucide-react";
 import { useRegister } from "@/lib/auth-hooks";
 import { useAuth } from "@/lib/auth-context";
+import { getErrorMessage } from "@/lib/utils";
 
 interface SignupForm {
   email: string;
@@ -79,8 +80,7 @@ export default function SignupPage() {
                   <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Error</AlertTitle>
                   <AlertDescription>
-                    {(registerMutation.error as any)?.response?.data?.message ||
-                      "Failed to register. Please try again."}
+                    {getErrorMessage(registerMutation.error, "Failed to register. Please try again.")}
                   </AlertDescription>
                 </Alert>
               )}

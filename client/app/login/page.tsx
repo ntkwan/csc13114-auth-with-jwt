@@ -13,6 +13,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CheckCircle2, AlertCircle } from "lucide-react";
 import { useLogin } from "@/lib/auth-hooks";
 import { useAuth } from "@/lib/auth-context";
+import { getErrorMessage } from "@/lib/utils";
 
 interface LoginForm {
   email: string;
@@ -72,7 +73,7 @@ export default function LoginPage() {
                   <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Error</AlertTitle>
                   <AlertDescription>
-                    {loginMutation.error?.message || 'Login failed. Please check your credentials.'}
+                    {getErrorMessage(loginMutation.error, 'Login failed. Please check your credentials.')}
                   </AlertDescription>
                 </Alert>
               )}

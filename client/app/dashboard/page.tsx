@@ -9,6 +9,7 @@ import { User, LogOut, AlertCircle } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { useUserProfile, useLogout } from "@/lib/auth-hooks";
 import { ProtectedRoute } from "@/components/protected-route";
+import { getErrorMessage } from "@/lib/utils";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -55,7 +56,7 @@ export default function DashboardPage() {
                       <AlertCircle className="h-4 w-4" />
                       <AlertTitle>Error</AlertTitle>
                       <AlertDescription>
-                        Failed to load user profile. Please try refreshing the page.
+                        {getErrorMessage(error, "Failed to load user profile. Please try refreshing the page.")}
                       </AlertDescription>
                     </Alert>
                   )}
